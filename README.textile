@@ -1,0 +1,25 @@
+h1. PyroQuery
+
+Allows you to make MySQL queries in layouts and output the resulting data.
+
+h2. Installation
+
+Drop the query.php file into your _addons/plugins_ folder.
+
+h2. Usage
+
+{pyro:query:run query="SELECT * FROM table"}
+	{field_name}
+{/pyro:query:run}
+
+Simple provide your query as the *query* parameter, and the plugin will make all the fields returned by your query available as variables.
+
+In addition, PyroQuery returns two special variables:
+
+h3. {query.odd_even}
+
+Returns "odd" or "even" based on the row being displayed.
+
+h3. {query.last_row}
+
+Returns "yes" or "no" based on whether the row being displayed is the last one.
