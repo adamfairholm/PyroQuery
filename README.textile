@@ -23,3 +23,15 @@ Returns "odd" or "even" based on the row being displayed.
 h3. {query.last_row}
 
 Returns "yes" or "no" based on whether the row being displayed is the last one.
+
+h3. Debugging
+
+If PyroQuery encounters a MySQL error, it will, by default, just return nothing. However, if you pass a *debug* parameter set to "on", PyroQuery will display the database error.
+
+{pyro:query:run query="SECT * FROM table" debug="on"}
+	{field_name}
+{/pyro:query:run}
+
+This would return:
+
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SECT * FROM table' at line 1
