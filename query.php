@@ -6,7 +6,8 @@
  * Use MySQL Queries in Your Layouts
  *
  * @package		PyroQuery
- * @author		Addict Addons
+ * @version		1.1
+ * @author		Addict Add-ons
  * @copyright	Copyright (c) 2011, Addict Addons
  * @link		https://github.com/addict-addons/PyroQuery
  */
