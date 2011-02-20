@@ -27,7 +27,34 @@ class Plugin_query extends Plugin
 	 */
 	public function run()
 	{
+		// No going apeshit for an error
+		$this->db->db_debug = FALSE;
+
 		$db_obj = $this->db->query( $this->attribute('query') );
+
+		// -------------------------------------
+		// Error Handling
+		// -------------------------------------
+		
+		if( !$db_obj ):
+		
+			if( $this->attribute('debug', 'off') == 'on' ):
+		
+				// Debugging is on. Get the error.
+				return mysql_error();
+				
+			else:
+			
+				// We want to go quietly.
+				return;
+			
+			endif;
+		
+		endif;
+
+		// -------------------------------------
+		// Query Loop Prep
+		// -------------------------------------
 		
 		$results = $db_obj->result();
 		
