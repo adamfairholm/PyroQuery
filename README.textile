@@ -4,7 +4,7 @@ Allows you to make MySQL queries in layouts and output the resulting data.
 
 h2. Installation
 
-Drop the query.php file into your _addons/plugins_ folder.
+Drop the query.php file into your _addons/plugins_ folder (PyroCMS 1.3 and below) or your _addons/shared_addons/plugins_ folder (PyroCMS 1.3+).
 
 h2. Usage
 
