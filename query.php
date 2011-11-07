@@ -3,13 +3,13 @@
 /**
  * PyroQuery Plugin
  *
- * Use MySQL Queries in Your Layouts
+ * Use MySQL Queries in your PyroCMS template
  *
  * @package		PyroQuery
- * @version		1.1
- * @author		Addict Add-ons
- * @copyright	Copyright (c) 2011, Addict Addons
- * @link		https://github.com/addict-addons/PyroQuery
+ * @version		1.2
+ * @author		Parse19
+ * @copyright	Copyright (c) 2011, Parse19
+ * @link		http://parse19.com/pyroquery
  */
 class Plugin_query extends Plugin
 {
@@ -19,9 +19,9 @@ class Plugin_query extends Plugin
 	 * Runs a MySQL query
 	 *
 	 * Usage:
-	 * {pyro:query:run query="SELECT * FROM table"}
-	 * 		{field_name}
-	 * {/pyro:query:run}
+	 * {{ query:run query="SELECT * FROM table" }}
+	 * 	{{ field_name }}
+	 * {{ /query:run }}
 	 *
 	 * @access	public
 	 * @return	array
@@ -78,11 +78,9 @@ class Plugin_query extends Plugin
 			endforeach;
 			
 			// Odd/Even
-			
 			(($count-1)%2) == 0 ? $return[$count]['query.odd_even'] = 'even' : $return[$count]['query.odd_even'] = 'odd';
 						
-			// Last Item
-			
+			// Last Item			
 			$count+1 == $total ? $return[$count]['query.last_row'] = 'yes' : $return[$count]['query.last_row'] = 'no';
 					
 			$count++;
