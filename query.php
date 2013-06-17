@@ -6,7 +6,7 @@
  * Use MySQL Queries in your PyroCMS template
  *
  * @package		PyroQuery
- * @version		1.2
+ * @version		2.0
  * @author		Adam Fairholm
  * @copyright	Copyright (c) 2011-2013 Adam Fairholm
  * @link		https://github.com/adamfairholm/PyroQuery
@@ -19,7 +19,7 @@ class Plugin_query extends Plugin
 	 * Runs a MySQL query
 	 *
 	 * Usage:
-	 * {{ query:run query="SELECT * FROM table" }}
+	 * {{ query:run select="*" from="my_table" where="column = 2" }}
 	 * 	{{ field_name }}
 	 * {{ /query:run }}
 	 *
@@ -30,13 +30,45 @@ class Plugin_query extends Plugin
 		// No going apeshit for an error
 		$this->db->db_debug = false;
 
-		$results = $this->db->query($this->attribute('query'))->result();
+		// -------------------------------------
+		// Build basic query
+		// -------------------------------------
+
+		$where = '';
+		if ($this->attribute('where')) {
+			$where = ' WHERE '.$this->attribute('where');
+		}
+
+		$limit = ($this->attribute('limit')) ? $this->attribute('limit') : null;
+		$offset = $this->attribute('offset', 0);
+
+		$limitStatement = null;
+		if ($limit) {
+			$limitStatement = " LIMIT $offset, $limit";
+		}
+
+		$orderBy = null;
+		if ($this->attribute('orderBy')) {
+			$orderBy = ' ORDER BY '.$this->attribute('orderBy').' '.$this->attribute('sort', 'desc');
+		}
+
+		$from = $this->db->dbprefix($this->attribute('from'));
+		$select = $this->attribute('select', '*');
+
+		$query = "
+		SELECT $select
+		FROM $from
+		$where
+		$limitStatement
+		";
+
+		$results = $this->db->query($query)->result();
 
 		// -------------------------------------
 		// Error Handling
 		// -------------------------------------
 		
-		if ( ! $db_obj) {
+		if ( ! $results) {
 		
 			if ($this->attribute('debug', 'off') == 'on') {
 		
@@ -71,10 +103,10 @@ class Plugin_query extends Plugin
 			}
 			
 			// Odd/Even
-			(($count-1)%2) == 0 ? $return[$count]['query.odd_even'] = 'even' : $return[$count]['query.odd_even'] = 'odd';
+			(($count-1)%2) == 0 ? $return[$count]['odd_even'] = 'even' : $return[$count]['odd_even'] = 'odd';
 						
 			// Last Item			
-			$count+1 == $total ? $return[$count]['query.last_row'] = 'yes' : $return[$count]['query.last_row'] = 'no';
+			$count+1 == $total ? $return[$count]['last_row'] = 'yes' : $return[$count]['last_row'] = 'no';
 					
 			$count++;
 		}
